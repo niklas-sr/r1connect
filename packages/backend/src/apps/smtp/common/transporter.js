@@ -1,7 +1,8 @@
 import nodemailer from 'nodemailer';
+import logger from '../../../helpers/logger.js';
 
 const transporter = ($) => {
-  console.log('Creating SMTP transport with config:', {
+  logger.info('[SMTP] Creating transport', {
     host: $.auth.data.host,
     port: $.auth.data.port,
     secure: $.auth.data.useTls,
@@ -18,7 +19,12 @@ const transporter = ($) => {
       pass: $.auth.data.password,
     },
     debug: true, // Enable debug output
-    logger: true // Enable logger output
+    logger: {
+      debug: (msg) => logger.debug('[SMTP Debug]', { msg }),
+      info: (msg) => logger.info('[SMTP Info]', { msg }),
+      warn: (msg) => logger.warn('[SMTP Warn]', { msg }),
+      error: (msg) => logger.error('[SMTP Error]', { msg })
+    }
   });
 
   // Add event listeners for connection events

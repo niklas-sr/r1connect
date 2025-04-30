@@ -1,28 +1,47 @@
+import logger from '../../../helpers/logger.js';
 import transporter from '../common/transporter.js';
 
 const verifyCredentials = async ($) => {
-  console.log('Starting SMTP verification with settings:', {
+  logger.info('[SMTP] Starting verification', {
     host: $.auth.data.host,
     port: $.auth.data.port,
     secure: $.auth.data.useTls,
-    // Don't log password for security
-    username: $.auth.data.username
+    username: $.auth.data.username,
+    // Omit password for security
   });
 
   try {
-    await transporter($).verify();
-    console.log('SMTP verification successful');
+    const smtp = transporter($);
     
+    // Add debug event listeners
+    smtp.on('connection', () => {
+      logger.info('[SMTP] Connection established');
+    });
+
+    smtp.on('error', (err) => {
+      logger.error('[SMTP] Transport error', { error: err.message });
+    });
+
+    smtp.on('log', (log) => {
+      logger.debug('[SMTP] Transport log', { log });
+    });
+
+    // Set longer timeout for verify
+    const verifyResult = await smtp.verify({ timeout: 10000 });
+    
+    logger.info('[SMTP] Verification successful', { result: verifyResult });
+
     await $.auth.set({
       screenName: $.auth.data.username,
     });
   } catch (error) {
-    console.error('SMTP verification failed:', {
+    logger.error('[SMTP] Verification failed', {
       error: error.message,
       code: error.code,
       command: error.command,
       responseCode: error.responseCode,
-      response: error.response
+      response: error.response,
+      stack: error.stack
     });
     throw error;
   }
