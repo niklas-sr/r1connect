@@ -16,15 +16,22 @@ services:
       - HOST=${HOST}
       - PROTOCOL=${PROTOCOL} 
       - PORT=${PORT}
+      - API_URL=${API_URL}
       - APP_ENV=${APP_ENV}
       - REDIS_HOST=${REDIS_HOST}
       - POSTGRES_HOST=${POSTGRES_HOST}
       - POSTGRES_DATABASE=${POSTGRES_DATABASE}
       - POSTGRES_USERNAME=${POSTGRES_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - FROM_EMAIL=${FROM_EMAIL}
       - ENCRYPTION_KEY=${ENCRYPTION_KEY}
       - WEBHOOK_SECRET_KEY=${WEBHOOK_SECRET_KEY}
       - APP_SECRET_KEY=${APP_SECRET_KEY}
+      - LOG_LEVEL=${LOG_LEVEL}
     volumes:
       - r1connect_storage:/r1connect/storage
   worker:
