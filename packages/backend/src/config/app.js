@@ -110,6 +110,7 @@ const appConfig = {
   httpProxy: process.env.http_proxy,
   httpsProxy: process.env.https_proxy,
   noProxy: process.env.no_proxy,
+  logoSvgData: process.env.LOGO_SVG,
 };
 
 if (!appConfig.encryptionKey) {
