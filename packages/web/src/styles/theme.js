@@ -4,9 +4,9 @@ import { cardActionAreaClasses } from '@mui/material/CardActionArea';
 
 const referenceTheme = createTheme();
 
-export const primaryMainColor = '#0059F7';
-export const primaryLightColor = '#4286FF';
-export const primaryDarkColor = '#001F52';
+export const primaryMainColor = '#FFF850';
+export const primaryLightColor = '#FFFFFF';
+export const primaryDarkColor = '#090913';
 
 export const defaultTheme = createTheme({
   palette: {
